@@ -22,3 +22,8 @@ def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
 @router.get("/users/", response_model=list[schemas.User])
 def read_users(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
     return crud.get_users(db, skip=skip, limit=limit)
+
+
+@router.get("/users/tasks/{task_id}", response_model=list[schemas.User])
+def read_task_users(task_id: int, db: Session = Depends(get_db)):
+    return crud.get_users_by_task_id(db, task_id=task_id)

@@ -27,6 +27,9 @@ class TaskBase(BaseModel):
     description: str
     end_date: datetime
 
+    class Config:
+        from_attributes = True
+
 
 class TaskCreate(TaskBase):
     pass
@@ -39,7 +42,7 @@ class Task(TaskBase):
         from_attributes = True
 
 
-class TaskAssignmentBase(TaskBase):
+class TaskAssignmentBase(BaseModel):
     user_id: int
     task_id: int
     description: str
@@ -50,3 +53,7 @@ class TaskAssignment(TaskAssignmentBase):
 
     class Config:
         from_attributes = True
+
+
+class TaskAssignmentCreate(TaskAssignmentBase):
+    pass

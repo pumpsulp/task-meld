@@ -39,9 +39,9 @@ class TaskAssignment(Base):
     __tablename__ = "TaskAssignment"
 
     id = Column(Integer, primary_key=True)
+    description = Column(String)
     user_id = Column(Integer, ForeignKey("User.id"))
     task_id = Column(Integer, ForeignKey("Task.id"))
-    description = Column(String, nullable=True)
 
 
 class Task(Base):

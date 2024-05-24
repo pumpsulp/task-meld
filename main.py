@@ -1,13 +1,14 @@
 from fastapi import FastAPI
 
-from api.endpoints import tasks, users
+from api.endpoints import tasks, users, assignments
 from db.database import Base, engine
 
 app = FastAPI()
 
 
-app.include_router(tasks.router, prefix="/taskmeld", tags=["Tasks"])
-app.include_router(users.router, prefix="/taskmeld", tags=["Users"])
+app.include_router(tasks.router, prefix="/app", tags=["Tasks"])
+app.include_router(users.router, prefix="/app", tags=["Users"])
+app.include_router(assignments.router, prefix="/app", tags=["Assignments"])
 
 
 @app.on_event("startup")
