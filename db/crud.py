@@ -1,11 +1,14 @@
+from typing import Optional
+
+from fastapi import Depends
+from fastapi.security import OAuth2PasswordBearer
+from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from api import schemas
-from core.security import get_password_hash
-from db.entities import User, Task, TaskAssignment
-
-
-# TODO: рефакторинг
+from core.security import get_password_hash, verify_password
+from db.database import SessionLocal
+from db.entities import User, Task, TaskAssignment, Role
 
 
 def get_user(db: Session, user_id: int):
@@ -32,13 +35,13 @@ def create_user(db: Session, user: schemas.UserCreate):
     # Создать пользователя
     hashed_password = get_password_hash(user.password)
     del user.password
-
+    
     db_user = User(**user.model_dump(), hashed_password=hashed_password)
-
+    
     db.add(db_user)
     db.commit()
     db.refresh(db_user)
-
+    
     return db_user
 
 
@@ -85,3 +88,12 @@ def get_users_by_task_id(db: Session, task_id: int):
         .where(TaskAssignment.task_id == task_id)
         .all()
     )
+
+
+def authenticate_user(db: Session, login: str, password: str):
+    user = get_user_by_login(db, login)
+    if not user:
+        return False
+    if not verify_password(password, user.hashed_password):
+        return False
+    return user

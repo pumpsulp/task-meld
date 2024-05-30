@@ -1,4 +1,5 @@
 from datetime import datetime
+from typing import Optional
 
 from pydantic import BaseModel
 
@@ -17,6 +18,7 @@ class UserCreate(UserBase):
 class User(UserBase):
     id: int
     role: str
+    otp: str
 
     class Config:
         from_attributes = True
@@ -57,3 +59,7 @@ class TaskAssignment(TaskAssignmentBase):
 
 class TaskAssignmentCreate(TaskAssignmentBase):
     pass
+
+
+class TokenData(BaseModel):
+    user_id: Optional[int] = None

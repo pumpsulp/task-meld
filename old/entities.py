@@ -1,5 +1,6 @@
 import enum
 
+import pyotp
 from sqlalchemy import Column, ForeignKey, Integer, String, Enum, DateTime, func
 from sqlalchemy.orm import relationship
 
@@ -48,6 +49,7 @@ class User(Base):
     last_name = Column(String)
 
     hashed_password = Column(String)
+    otp_secret = Column(String, default=pyotp.random_base32())
 
     role = Column(Enum(Role), default=Role.DEFAULT)
 

@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from api import schemas
+from api.auth import get_current_active_admin
 from db import crud
 from db.database import get_db
 
@@ -10,7 +11,8 @@ router = APIRouter()
 
 @router.post("/assignments/", response_model=schemas.TaskAssignment)
 def create_assignment(
-    assignment: schemas.TaskAssignmentCreate, db: Session = Depends(get_db)
+    assignment: schemas.TaskAssignmentCreate, db: Session = Depends(get_db),
+    current_user: schemas.User = Depends(get_current_active_admin)
 ):
     db_task = crud.get_task_by_attribute(db=db, id=assignment.task_id)
     if db_task is None:
@@ -24,5 +26,6 @@ def create_assignment(
 
 
 @router.get("/assignments/", response_model=list[schemas.TaskAssignment])
-def read_assignments(skip: int = 0, limit: int = 100, db: Session = Depends(get_db)):
+def read_assignments(skip: int = 0, limit: int = 100, db: Session = Depends(get_db),
+                     current_user: schemas.User = Depends(get_current_active_admin)):
     return crud.get_assignments(db, skip=skip, limit=limit)

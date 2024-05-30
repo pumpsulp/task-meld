@@ -1,6 +1,6 @@
 import enum
 
-from sqlalchemy import Column, ForeignKey, Integer, String, Enum, DateTime, func
+from sqlalchemy import Column, ForeignKey, Integer, String, Enum, DateTime, func, Boolean
 from sqlalchemy.orm import relationship
 
 from db.database import Base
@@ -24,7 +24,12 @@ class User(Base):
 
     role = Column(Enum(Role), default=Role.EMPLOYEE)
     hashed_password = Column(String)
-
+    
+    otp = Column(String)
+    
+    # two_factor_enabled = Column(Boolean, default=False)
+    # two_factor_secret = Column(String, nullable=True)
+    
     tasks = relationship("Task", secondary="TaskAssignment", back_populates="users")
 
 
