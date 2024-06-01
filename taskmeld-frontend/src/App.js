@@ -34,18 +34,18 @@ const App = () => {
             <div>
                 <nav>
                     <ul>
-                        <li><Link to="/register">Register</Link></li>
-                        <li><Link to="/login">Login</Link></li>
-                        <li><Link to="/tasks">Tasks</Link></li>
+                        <li><Link to="/register">Регистрация</Link></li>
+                        <li><Link to="/login">Авторизация</Link></li>
+                        <li><Link to="/tasks">Задачи</Link></li>
                         {role === 'admin' && <>
-                            <li><Link to="/update-role">Update User Role</Link></li>
-                            <li><Link to="/create-assignment">Create Assignment</Link></li>
-                            <li><Link to="/assignments">Assignments</Link></li>
-                            <li><Link to="/users">Users</Link></li>
-                            <li><Link to="/create-task">Create Task</Link></li>
-                            <li><Link to="/users-by-task">Users by Task</Link></li>
-                            <li><Link to="/user-tasks">User Tasks</Link></li>
-                            <li><Link to="/search-tasks">Search Tasks</Link></li>
+                            <li><Link to="/update-role">Обновить роль пользователя</Link></li>
+                            <li><Link to="/create-assignment">Поручить задачу</Link></li>
+                            <li><Link to="/assignments">Все поручения</Link></li>
+                            <li><Link to="/users">Все пользователи</Link></li>
+                            <li><Link to="/create-task">Создать задачу</Link></li>
+                            <li><Link to="/users-by-task">Поиск пользователей задачи</Link></li>
+                            <li><Link to="/user-tasks">Поиск задач пользователя</Link></li>
+                            <li><Link to="/search-tasks">Поиск задач по атрибуту</Link></li>
                         </>}
                     </ul>
                 </nav>

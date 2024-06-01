@@ -18,31 +18,31 @@ const SearchTasks = () => {
             const response = await searchTasks(attr, val, token);
             setTasks(response);
         } catch (error) {
-            alert(error.message || 'Error searching tasks');
+            alert(error.message || 'Ошибка поиска задач');
             console.error(error);
         }
     };
 
     return (
         <div>
-            <h1>Search Tasks</h1>
+            <h1>Поиск задачи</h1>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Attribute:</label>
+                    <label>Аттрибут:</label>
                     <select name="attr" value={attr} onChange={handleChange}>
                         <option value="id">ID</option>
-                        <option value="name">Name</option>
-                        <option value="description">Description</option>
-                        <option value="start_date">Start Date</option>
-                        <option value="end_date">End Date</option>
-                        <option value="status">Status</option>
+                        <option value="name">Название</option>
+                        <option value="description">Описание</option>
+                        <option value="start_date">Дата начала</option>
+                        <option value="end_date">Дата окончания</option>
+                        <option value="status">Статус</option>
                     </select>
                 </div>
                 <div>
-                    <label>Value:</label>
+                    <label>Значение:</label>
                     <input type="text" name="val" value={val} onChange={handleChange} required />
                 </div>
-                <button type="submit">Search</button>
+                <button type="submit">Поиск</button>
             </form>
             <ul>
                 {tasks.map(task => (

@@ -23,13 +23,13 @@ const UserTasks = () => {
 
     return (
         <div>
-            <h1>User Tasks</h1>
+            <h1>Поиск задач пользователя</h1>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>User ID:</label>
+                    <label>ID пользователя:</label>
                     <input type="text" value={userId} onChange={handleChange} required />
                 </div>
-                <button type="submit">Get Tasks</button>
+                <button type="submit">Получить задачи</button>
             </form>
             <ul>
                 {tasks.map(task => (

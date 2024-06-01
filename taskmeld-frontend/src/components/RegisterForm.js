@@ -31,7 +31,7 @@ const RegisterForm = () => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <label>Username:</label>
+                <label>Имя пользователя:</label>
                 <input type="text" name="username" value={formData.username} onChange={handleChange} required/>
             </div>
             <div>
@@ -39,11 +39,11 @@ const RegisterForm = () => {
                 <input type="email" name="email" value={formData.email} onChange={handleChange} required/>
             </div>
             <div>
-                <label>Login:</label>
+                <label>Логин:</label>
                 <input type="login" name="login" value={formData.login} onChange={handleChange} required/>
             </div>
             <div>
-                <label>Password:</label>
+                <label>Пароль:</label>
                 <input type="password" name="password" value={formData.password} onChange={handleChange} required/>
             </div>
             <button type="submit">Register</button>

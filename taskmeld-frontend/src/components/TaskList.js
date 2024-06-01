@@ -25,10 +25,10 @@ const TaskList = ({ role }) => {
 
     return (
         <div>
-            <h1>Tasks</h1>
+            <h1>Задачи</h1>
             <ul>
                 {tasks.map(task => (
-                    <li key={task.id}>{task.name}</li>
+                    <li key={task.id}>{task.id} {task.name} - {task.description} до {task.end_date} </li>
                 ))}
             </ul>
         </div>

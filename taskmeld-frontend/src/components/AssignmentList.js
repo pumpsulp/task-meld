@@ -11,7 +11,7 @@ const AssignmentList = () => {
                 const response = await getAssignments(token);
                 setAssignments(response);
             } catch (error) {
-                console.error('Error fetching assignments:', error);
+                console.error('Ошибка получения поручений:', error);
             }
         };
 
@@ -20,11 +20,11 @@ const AssignmentList = () => {
 
     return (
         <div>
-            <h1>Assignments</h1>
+            <h1>Поручения</h1>
             <ul>
                 {assignments.map(assignment => (
                     <li key={assignment.id}>
-                        Task ID: {assignment.task_id}, User ID: {assignment.user_id}
+                        ID задачи: {assignment.task_id}, ID пользователя: {assignment.user_id}
                     </li>
                 ))}
             </ul>

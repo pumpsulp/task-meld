@@ -20,11 +20,11 @@ const LoginForm = () => {
         e.preventDefault();
         try {
             const response = await loginUser(formData);
-            alert('Login successful!');
+            alert('Успешная авторизация!');
             localStorage.setItem('token', response.access_token);
             window.location.reload(); // Перезагрузка страницы
         } catch (error) {
-            alert(error.message || 'Error logging in');
+            alert(error.message || 'Ошибка авторизации!');
             console.error(error);
         }
     };
@@ -36,10 +36,10 @@ const LoginForm = () => {
                 <input type="email" name="username" value={formData.username} onChange={handleChange} required />
             </div>
             <div>
-                <label>Password:</label>
+                <label>Пароль:</label>
                 <input type="password" name="password" value={formData.password} onChange={handleChange} required />
             </div>
-            <button type="submit">Login</button>
+            <button type="submit">Вход</button>
         </form>
     );
 };

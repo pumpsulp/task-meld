@@ -11,7 +11,7 @@ const UserList = () => {
                 const response = await getUsers(token);
                 setUsers(response);
             } catch (error) {
-                console.error('Error fetching users:', error);
+                console.error('Ошибка получения списка пользователей:', error);
             }
         };
 
@@ -20,7 +20,7 @@ const UserList = () => {
 
     return (
         <div>
-            <h1>Users</h1>
+            <h1>Пользователи</h1>
             <ul>
                 {users.map(user => (
                     <li key={user.id}>

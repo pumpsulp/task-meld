@@ -19,10 +19,10 @@ const CreateAssignment = () => {
         e.preventDefault();
         try {
             const response = await createAssignment(assignmentData, token);
-            alert('Assignment created successfully!');
+            alert('Поручение успешно создано!');
             console.log(response);
         } catch (error) {
-            alert(error.message || 'Error creating assignment');
+            alert(error.message || 'Ошибка создания поручения');
             console.error(error);
         }
     };
@@ -30,12 +30,16 @@ const CreateAssignment = () => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <label>Task ID:</label>
-                <input type="text" name="task_id" value={assignmentData.task_id} onChange={handleChange} required />
+                <label>ID задачи:</label>
+                <input type="text" name="task_id" value={assignmentData.task_id} onChange={handleChange} required/>
             </div>
             <div>
-                <label>User ID:</label>
-                <input type="text" name="user_id" value={assignmentData.user_id} onChange={handleChange} required />
+                <label>ID пользователя:</label>
+                <input type="text" name="user_id" value={assignmentData.user_id} onChange={handleChange} required/>
+            </div>
+            <div>
+                <label>Описание:</label>
+                <input type="text" name="description" value={assignmentData.description} onChange={handleChange} required/>
             </div>
             <button type="submit">Create Assignment</button>
         </form>

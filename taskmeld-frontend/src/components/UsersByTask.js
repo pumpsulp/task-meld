@@ -16,20 +16,20 @@ const UsersByTask = () => {
             const response = await getUsersByTask(taskId, token);
             setUsers(response);
         } catch (error) {
-            alert(error.message || 'Error fetching users by task');
+            alert(error.message || 'Ошибка поиска пользователя по задаче!');
             console.error(error);
         }
     };
 
     return (
         <div>
-            <h1>Users by Task</h1>
+            <h1>Поиск пользователя по задаче</h1>
             <form onSubmit={handleSubmit}>
                 <div>
-                    <label>Task ID:</label>
+                    <label>ID задачи:</label>
                     <input type="text" value={taskId} onChange={handleChange} required />
                 </div>
-                <button type="submit">Get Users</button>
+                <button type="submit">Найти пользователей</button>
             </form>
             <ul>
                 {users.map(user => (

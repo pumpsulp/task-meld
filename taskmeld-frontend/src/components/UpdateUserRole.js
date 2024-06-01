@@ -16,10 +16,10 @@ const UpdateUserRole = () => {
         e.preventDefault();
         try {
             const response = await updateUserRole(userId, { role }, token);
-            alert(`User role updated successfully! New role: ${response.role}`);
+            alert(`Роль пользователя успешно обновлена! Новая роль: ${response.role}`);
             console.log(response);
         } catch (error) {
-            alert(error.message || 'Error updating user role');
+            alert(error.message || 'Ошибка при обновлении роли');
             console.error(error);
         }
     };
@@ -27,17 +27,17 @@ const UpdateUserRole = () => {
     return (
         <form onSubmit={handleSubmit}>
             <div>
-                <label>User ID:</label>
+                <label>ID пользователя:</label>
                 <input type="text" name="userId" value={userId} onChange={handleChange} required />
             </div>
             <div>
-                <label>Role:</label>
+                <label>Роль:</label>
                 <select name="role" value={role} onChange={handleChange}>
-                    <option value="employee">Employee</option>
-                    <option value="admin">Admin</option>
+                    <option value="employee">Работник</option>
+                    <option value="admin">Админ</option>
                 </select>
             </div>
-            <button type="submit">Update Role</button>
+            <button type="submit">Обновить роль</button>
         </form>
     );
 };
