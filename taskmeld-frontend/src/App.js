@@ -1,38 +1,73 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
-import HomePage from './pages/HomePage';
-import TasksPage from './pages/TasksPage';
-import UsersPage from './pages/UsersPage';
-import AssignmentsPage from './pages/AssignmentsPage';
-import UserTasksPage from './pages/UserTasksPage';
-import TaskSearchPage from './pages/TaskSearchPage';
-import TaskUsersPage from './pages/TaskUsersPage';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import TaskList from './components/TaskList';
+import UpdateUserRole from './components/UpdateUserRole';
+import CreateAssignment from './components/CreateAssignment';
+import AssignmentList from './components/AssignmentList';
+import UserList from './components/UserList';
+import CreateTask from './components/CreateTask';
+import UsersByTask from './components/UsersByTask';
+import UserTasks from './components/UserTasks';
+import SearchTasks from './components/SearchTasks';
+import { fetchUserInfo } from './services/api';
+import ErrorPage from './components/ErrorPage';
 
-function App() {
-  return (
-    <Router>
-      <nav>
-        <ul>
-          <li><Link to="/">Home</Link></li>
-          <li><Link to="/tasks">Tasks</Link></li>
-          <li><Link to="/users">Users</Link></li>
-          <li><Link to="/assignments">Assignments</Link></li>
-          <li><Link to="/user-tasks">User Tasks</Link></li>
-          <li><Link to="/task-search">Task Search</Link></li>
-          <li><Link to="/task-users">Task Users</Link></li>
-        </ul>
-      </nav>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/tasks" element={<TasksPage />} />
-        <Route path="/users" element={<UsersPage />} />
-        <Route path="/assignments" element={<AssignmentsPage />} />
-        <Route path="/user-tasks" element={<UserTasksPage />} />
-        <Route path="/task-search" element={<TaskSearchPage />} />
-        <Route path="/task-users" element={<TaskUsersPage />} />
-      </Routes>
-    </Router>
-  );
-}
+const App = () => {
+    const [role, setRole] = useState(null);
+
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            fetchUserInfo(token).then(user => {
+                setRole(user.role);
+            }).catch(error => {
+                console.error('Error fetching user info:', error);
+                localStorage.removeItem('token');
+            });
+        }
+    }, []);
+
+    return (
+        <Router>
+            <div>
+                <nav>
+                    <ul>
+                        <li><Link to="/register">Register</Link></li>
+                        <li><Link to="/login">Login</Link></li>
+                        <li><Link to="/tasks">Tasks</Link></li>
+                        {role === 'admin' && <>
+                            <li><Link to="/update-role">Update User Role</Link></li>
+                            <li><Link to="/create-assignment">Create Assignment</Link></li>
+                            <li><Link to="/assignments">Assignments</Link></li>
+                            <li><Link to="/users">Users</Link></li>
+                            <li><Link to="/create-task">Create Task</Link></li>
+                            <li><Link to="/users-by-task">Users by Task</Link></li>
+                            <li><Link to="/user-tasks">User Tasks</Link></li>
+                            <li><Link to="/search-tasks">Search Tasks</Link></li>
+                        </>}
+                    </ul>
+                </nav>
+                <Routes>
+                    <Route path="/register" element={<Register />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/tasks" element={<TaskList role={role} />} />
+                    {role === 'admin' && <>
+                        <Route path="/update-role" element={<UpdateUserRole />} />
+                        <Route path="/create-assignment" element={<CreateAssignment />} />
+                        <Route path="/assignments" element={<AssignmentList />} />
+                        <Route path="/users" element={<UserList />} />
+                        <Route path="/create-task" element={<CreateTask />} />
+                        <Route path="/users-by-task" element={<UsersByTask />} />
+                        <Route path="/user-tasks" element={<UserTasks />} />
+                        <Route path="/search-tasks" element={<SearchTasks />} />
+                    </>}
+                    <Route path="*" element={<ErrorPage />} />
+                </Routes>
+            </div>
+        </Router>
+    );
+};
 
 export default App;

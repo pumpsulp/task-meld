@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from api import schemas
-from api.auth import get_current_active_admin
+from api.endpoints.auth import get_current_active_admin
 from db import crud
 from db.database import get_db
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import UserList from '../components/UserList';
-import UserForm from '../components/UserForm';
+import UserForm from './UserForm';
 
 const UsersPage = () => (
   <div>

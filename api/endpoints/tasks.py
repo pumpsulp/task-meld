@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from api import schemas
-from api.auth import get_current_active_user, get_current_active_admin
+from api.endpoints.auth import get_current_active_admin, get_current_user
 from db import crud
 from db.database import get_db
 
@@ -46,5 +46,5 @@ def read_task(
 
 
 @router.get("/tasks/own/", response_model=list[schemas.Task])
-def read_own_tasks(db: Session = Depends(get_db), current_user: schemas.User = Depends(get_current_active_user)):
-    return read_user_tasks(db, user_id=current_user.id)
+def read_own_tasks(db: Session = Depends(get_db), current_user: schemas.User = Depends(get_current_user)):
+    return crud.get_tasks_by_user_id(db, user_id=current_user.id)

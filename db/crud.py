@@ -1,13 +1,7 @@
-from typing import Optional
-
-from fastapi import Depends
-from fastapi.security import OAuth2PasswordBearer
-from pydantic import BaseModel
 from sqlalchemy.orm import Session
 
 from api import schemas
-from core.security import get_password_hash, verify_password
-from db.database import SessionLocal
+from core.security import get_password_hash,  verify_password
 from db.entities import User, Task, TaskAssignment, Role
 
 
@@ -36,7 +30,13 @@ def create_user(db: Session, user: schemas.UserCreate):
     hashed_password = get_password_hash(user.password)
     del user.password
     
-    db_user = User(**user.model_dump(), hashed_password=hashed_password)
+    # code = generate_two_factor_code()
+    # expiry = datetime.utcnow() + timedelta(minutes=10)
+    #
+    # send_two_factor_code(code, user.email)
+    
+    db_user = User(**user.model_dump(),
+                   hashed_password=hashed_password)
     
     db.add(db_user)
     db.commit()
@@ -96,4 +96,11 @@ def authenticate_user(db: Session, login: str, password: str):
         return False
     if not verify_password(password, user.hashed_password):
         return False
+    return user
+
+def set_user_role(db: Session, user_id: int, role: str):
+    user = get_user(db, user_id=user_id)
+    user.role = role
+    db.commit()
+    db.refresh(user)
     return user

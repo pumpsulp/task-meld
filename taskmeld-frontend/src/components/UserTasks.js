@@ -1,27 +1,43 @@
-import React, { useState, useEffect } from 'react';
-import { fetchUserTasks } from '../services/api';
+import React, { useState } from 'react';
+import { getUserTasks } from '../services/api';
 
-const UserTasks = ({ userId }) => {
-  const [tasks, setTasks] = useState([]);
+const UserTasks = () => {
+    const [userId, setUserId] = useState('');
+    const [tasks, setTasks] = useState([]);
+    const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    fetchUserTasks(userId).then(response => {
-      setTasks(response.data);
-    });
-  }, [userId]);
+    const handleChange = (e) => {
+        setUserId(e.target.value);
+    };
 
-  return (
-    <div>
-      <h2>Tasks for User {userId}</h2>
-      <ul>
-        {tasks.map(task => (
-          <li key={task.id}>
-            ID: {task.id}, Name: {task.name}, Description: {task.description}, Start Date: {task.start_date}, End Date: {task.end_date}, Status: {task.status}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await getUserTasks(userId, token);
+            setTasks(response);
+        } catch (error) {
+            alert(error.message || 'Error fetching user tasks');
+            console.error(error);
+        }
+    };
+
+    return (
+        <div>
+            <h1>User Tasks</h1>
+            <form onSubmit={handleSubmit}>
+                <div>
+                    <label>User ID:</label>
+                    <input type="text" value={userId} onChange={handleChange} required />
+                </div>
+                <button type="submit">Get Tasks</button>
+            </form>
+            <ul>
+                {tasks.map(task => (
+                    <li key={task.id}>{task.name}</li>
+                ))}
+            </ul>
+        </div>
+    );
 };
 
 export default UserTasks;

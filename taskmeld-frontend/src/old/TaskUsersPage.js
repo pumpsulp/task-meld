@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import TaskUsers from '../components/TaskUsers';
+import TaskUsers from './TaskUsers';
 
 const TaskUsersPage = () => {
   const [taskId, setTaskId] = useState('');

@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from api.endpoints import tasks, users, assignments, twoFA, register
+from api.endpoints import tasks, users, assignments, auth
 from db.database import Base, engine
 
 app = FastAPI()
@@ -18,11 +18,10 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(tasks.router, prefix="/app", tags=["Tasks"])
-app.include_router(users.router, prefix="/app", tags=["Users"])
-app.include_router(assignments.router, prefix="/app", tags=["Assignments"])
-app.include_router(twoFA.router, prefix="/app", tags=["2fa"])
-app.include_router(register.router, prefix="/app", tags=["register"])
+app.include_router(tasks.router, prefix="/app", tags=["tasks"])
+app.include_router(users.router, prefix="/app", tags=["users"])
+app.include_router(assignments.router, prefix="/app", tags=["assignments"])
+app.include_router(auth.router, prefix="/app", tags=["auth"])
 
 
 @app.on_event("startup")

@@ -1,5 +1,5 @@
 import React from 'react';
-import AssignmentForm from '../components/AssignmentForm';
+import AssignmentForm from './AssignmentForm';
 import AssignmentList from '../components/AssignmentList';
 
 const AssignmentsPage = () => (

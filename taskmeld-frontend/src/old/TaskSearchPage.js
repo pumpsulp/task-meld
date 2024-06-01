@@ -1,5 +1,5 @@
 import React from 'react';
-import TaskSearch from '../components/TaskSearch';
+import TaskSearch from './TaskSearch';
 
 const TaskSearchPage = () => (
   <div>

@@ -6,7 +6,7 @@ from sqlalchemy.orm import relationship
 from db.database import Base
 
 
-class Role(enum.Enum):
+class Role:
     EMPLOYEE = "employee"
     ADMIN = "admin"
 
@@ -15,20 +15,17 @@ class User(Base):
     __tablename__ = "User"
 
     id = Column(Integer, primary_key=True)
-
-    login = Column(String, unique=True, index=True)
-    email = Column(String, unique=True, index=True)
-
-    first_name = Column(String)
-    last_name = Column(String)
-
-    role = Column(Enum(Role), default=Role.EMPLOYEE)
-    hashed_password = Column(String)
     
-    otp = Column(String)
+    username = Column(String, nullable=False)
+
+    login = Column(String, unique=True, index=True, nullable=False)
+    email = Column(String, unique=True, index=True, nullable=False)
+
+    role = Column(String, default=Role.EMPLOYEE, nullable=False)
+    hashed_password = Column(String, nullable=False)
     
-    # two_factor_enabled = Column(Boolean, default=False)
-    # two_factor_secret = Column(String, nullable=True)
+    # two_factor_code = Column(String, nullable=True)
+    # two_factor_expiry = Column(DateTime, nullable=True)
     
     tasks = relationship("Task", secondary="TaskAssignment", back_populates="users")
 

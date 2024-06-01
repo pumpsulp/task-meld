@@ -1,27 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { fetchTasks } from '../services/api';
+import { getOwnTasks, getAllTasks } from '../services/api';
 
-const TaskList = () => {
-  const [tasks, setTasks] = useState([]);
+const TaskList = ({ role }) => {
+    const [tasks, setTasks] = useState([]);
+    const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    fetchTasks().then((response) => {
-      setTasks(response.data);
-    });
-  }, []);
+    useEffect(() => {
+        const fetchTasks = async () => {
+            try {
+                let response;
+                if (role === 'admin') {
+                    response = await getAllTasks(token);
+                } else {
+                    response = await getOwnTasks(token);
+                }
+                setTasks(response);
+            } catch (error) {
+                console.error('Error fetching tasks:', error);
+            }
+        };
 
-  return (
-    <div>
-      <h2>Tasks</h2>
-      <ul>
-        {tasks.map((task) => (
-          <li key={task.id}>
-              ID: {task.id}, Name: {task.name}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+        fetchTasks();
+    }, [role, token]);
+
+    return (
+        <div>
+            <h1>Tasks</h1>
+            <ul>
+                {tasks.map(task => (
+                    <li key={task.id}>{task.name}</li>
+                ))}
+            </ul>
+        </div>
+    );
 };
 
 export default TaskList;
+

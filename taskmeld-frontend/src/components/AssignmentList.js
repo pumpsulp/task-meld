@@ -1,27 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { fetchAssignments } from '../services/api';
+import { getAssignments } from '../services/api';
 
 const AssignmentList = () => {
-  const [assignments, setAssignments] = useState([]);
+    const [assignments, setAssignments] = useState([]);
+    const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    fetchAssignments().then((response) => {
-      setAssignments(response.data);
-    });
-  }, []);
+    useEffect(() => {
+        const fetchAssignments = async () => {
+            try {
+                const response = await getAssignments(token);
+                setAssignments(response);
+            } catch (error) {
+                console.error('Error fetching assignments:', error);
+            }
+        };
 
-  return (
-    <div>
-      <h2>Assignments</h2>
-      <ul>
-        {assignments.map((assignment) => (
-          <li key={assignment.id}>
-            ID: {assignment.id}, User ID: {assignment.user_id}, Task ID: {assignment.task_id}, Description: {assignment.description}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+        fetchAssignments();
+    }, [token]);
+
+    return (
+        <div>
+            <h1>Assignments</h1>
+            <ul>
+                {assignments.map(assignment => (
+                    <li key={assignment.id}>
+                        Task ID: {assignment.task_id}, User ID: {assignment.user_id}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 };
 
 export default AssignmentList;

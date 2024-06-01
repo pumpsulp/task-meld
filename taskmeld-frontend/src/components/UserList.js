@@ -1,27 +1,35 @@
 import React, { useEffect, useState } from 'react';
-import { fetchUsers } from '../services/api';
+import { getUsers } from '../services/api';
 
 const UserList = () => {
-  const [users, setUsers] = useState([]);
+    const [users, setUsers] = useState([]);
+    const token = localStorage.getItem('token');
 
-  useEffect(() => {
-    fetchUsers().then((response) => {
-      setUsers(response.data);
-    });
-  }, []);
+    useEffect(() => {
+        const fetchUsers = async () => {
+            try {
+                const response = await getUsers(token);
+                setUsers(response);
+            } catch (error) {
+                console.error('Error fetching users:', error);
+            }
+        };
 
-  return (
-    <div>
-      <h2>Users</h2>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            ID: {user.id}, Email: {user.email}, Name: {user.first_name} {user.last_name}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+        fetchUsers();
+    }, [token]);
+
+    return (
+        <div>
+            <h1>Users</h1>
+            <ul>
+                {users.map(user => (
+                    <li key={user.id}>
+                        {user.id} {user.username} ({user.email}) - {user.role}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
 };
 
 export default UserList;
